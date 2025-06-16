@@ -73,7 +73,7 @@ const SignIn = () => {
       if (window.google) {
         window.google.accounts.id.initialize({
           client_id:
-            "566605135197-6a3vjlg9p440lmhd2qcf5ld8f8nllvdl.apps.googleusercontent.com",
+            "1077196841355-p0e18p9oloids5omou8uahs5m0jmqbju.apps.googleusercontent.com",
           callback: handleCredentialResponse,
         });
 
