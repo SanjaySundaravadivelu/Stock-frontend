@@ -7,6 +7,8 @@ import {
   Flex,
   useColorModeValue,
   Text,
+  VStack,
+  Spinner,
 } from "@chakra-ui/react";
 import Configurator from "../components/Configurator/Configurator";
 import Footer from "../components/Footer/Footer.jsx";
@@ -45,6 +47,7 @@ export default function Dashboard(props) {
   const history = useHistory();
   const [user, setUser] = useState();
   const [isValid, setisvalid] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -74,6 +77,7 @@ export default function Dashboard(props) {
             }
           }
         }
+        setLoading(false);
       } catch (error) {
         console.error("Invalid token", error);
       }
@@ -149,6 +153,22 @@ export default function Dashboard(props) {
   };
   const { isOpen, onOpen, onClose } = useDisclosure();
   document.documentElement.dir = "ltr";
+  if (loading) {
+    return (
+      <Flex
+        minH="300px"
+        wrap="wrap"
+        alignContent="center"
+        justifyContent="center"
+      >
+        {" "}
+        <VStack colorPalette="teal">
+          <Spinner color="white" />
+          <Text color="white">Loading...</Text>
+        </VStack>
+      </Flex>
+    );
+  }
 
   return (
     <>
