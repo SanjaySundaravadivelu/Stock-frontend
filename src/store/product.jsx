@@ -1,6 +1,6 @@
 import { create } from "zustand";
 const BEURL = import.meta.env.VITE_BE_URL;
-
+const token = localStorage.getItem("token");
 export const useProductStore = create((set) => ({
   currProduct: "",
   products1: [],
@@ -33,7 +33,10 @@ export const useProductStore = create((set) => ({
   login: async (email, password) => {
     const res = await fetch(BEURL + "/api/products/login", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: JSON.stringify({ credential: token }),
       credentials: "include",
     });
@@ -47,6 +50,7 @@ export const useProductStore = create((set) => ({
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(newProduct),
     });
@@ -65,6 +69,9 @@ export const useProductStore = create((set) => ({
   fetchStat: async () => {
     const res = await fetch(BEURL + `/api/products/getStat`, {
       credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     const data = await res.json();
     return data;
@@ -72,6 +79,9 @@ export const useProductStore = create((set) => ({
   updateStat: async () => {
     const res = await fetch(BEURL + `/api/products/updatestat`, {
       credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     const data = await res.json();
     return data;
@@ -79,6 +89,9 @@ export const useProductStore = create((set) => ({
   fetchReco: async () => {
     const res = await fetch(BEURL + `/api/products/getReco`, {
       credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     const data = await res.json();
     return data;
@@ -86,9 +99,11 @@ export const useProductStore = create((set) => ({
   searchStock: async (id) => {
     const res = await fetch(BEURL + `/api/products/search/${id}`, {
       credentials: "include",
+
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Credentials": true,
+        Authorization: `Bearer ${token}`,
       },
     });
     //console.log("RES", res);
@@ -102,6 +117,7 @@ export const useProductStore = create((set) => ({
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Credentials": true,
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -116,6 +132,7 @@ export const useProductStore = create((set) => ({
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Credentials": true,
+        Authorization: `Bearer ${token}`,
       },
     });
 
@@ -130,6 +147,7 @@ export const useProductStore = create((set) => ({
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Credentials": true,
+        Authorization: `Bearer ${token}`,
       },
     });
     //console.log("RES", res);
@@ -141,6 +159,7 @@ export const useProductStore = create((set) => ({
     const res = await fetch(`/api/products/${pid}`, {
       credentials: "include",
       method: "DELETE",
+      Authorization: `Bearer ${token}`,
     });
     const data = await res.json();
     if (!data.success) return { success: false, message: data.message };
@@ -157,6 +176,7 @@ export const useProductStore = create((set) => ({
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Credentials": true,
+        Authorization: `Bearer ${token}`,
       },
     });
     const data = await res.json();
