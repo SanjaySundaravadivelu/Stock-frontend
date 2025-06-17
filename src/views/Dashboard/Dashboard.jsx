@@ -36,6 +36,7 @@ import CardHeader from "../../components/Card/CardHeader.jsx";
 import BarChart from "../../components/Charts/BarChart";
 import LineChart from "../../components/Charts/LineChart";
 import IconBox from "../../components/Icons/IconBox";
+import EmptyWatchlist from "./EmptyWatchlist.jsx";
 // Icons
 import {
   CartIcon,
@@ -1076,368 +1077,388 @@ export default function Dashboard() {
             </Card>
           </SimpleGrid>
           {/* Projects */}
-          <Card p="16px" overflowX={{ sm: "scroll", xl: "hidden" }} my="26px">
-            <CardHeader p="12px 0px 28px 0px">
-              <Flex
-                direction="row"
-                width="-webkit-fill-available"
-                justifyContent="space-between"
+          {product.length <= 0 ? (
+            <EmptyWatchlist />
+          ) : (
+            <>
+              {" "}
+              <Card
+                p="16px"
+                overflowX={{ sm: "scroll", xl: "hidden" }}
+                my="26px"
               >
-                <Text fontSize="lg" color="#fff" fontWeight="bold" pb="8px">
-                  Your stocks
-                </Text>
-                <Flex align="center" justifyContent="space-between">
-                  {product.length > 0 && (
-                    <>
-                      <button
-                        onClick={async () => {
-                          const res = await updateProduct();
-                          getProducts();
-                        }}
-                      >
-                        <IconBox
-                          as="box"
-                          h={"45px"}
-                          w={"45px"}
-                          bg="#582cff"
-                          marginRight="10px"
-                        >
-                          <Icon as={FaFilePdf} color="#fff" w="30px" h="30px" />
-                        </IconBox>
-                      </button>
-                      <Flex direction="column">
-                        <Text
-                          fontWeight="bold"
-                          as="span"
-                          fontSize="sm"
-                          color="gray.400"
-                        >
-                          Send summary
-                        </Text>{" "}
-                      </Flex>
-                    </>
-                  )}
-                </Flex>
-              </Flex>
-            </CardHeader>
-            {product.length <= 0 ? (
-              <Text color="white">
-                Your Watchlist is empty ... Kindly navigate to explore and add
-                stocks to populate the dashboard 😊
-              </Text>
-            ) : (
-              <Table variant="simple" color="#fff">
-                <Thead>
-                  <Tr my=".8rem" ps="0px">
-                    <Th
-                      ps="0px"
-                      color="gray.400"
-                      fontFamily="Plus Jakarta Display"
-                      borderBottomColor="#56577A"
-                    >
-                      Name
-                    </Th>
-                    <Th
-                      color="gray.400"
-                      fontFamily="Plus Jakarta Display"
-                      borderBottomColor="#56577A"
-                    >
-                      Price
-                    </Th>
-                    <Th
-                      color="gray.400"
-                      fontFamily="Plus Jakarta Display"
-                      borderBottomColor="#56577A"
-                    >
-                      Percentage change
-                    </Th>
-                    <Th
-                      color="gray.400"
-                      fontFamily="Plus Jakarta Display"
-                      borderBottomColor="#56577A"
-                    >
-                      Analyst Recommendation
-                    </Th>
-                  </Tr>
-                </Thead>
-                <Tbody>
-                  {product.map((row, index, arr) => {
-                    return (
-                      <DashboardMainTable
-                        name={row.product.companyName}
-                        symbol={row.product.companyProfile.exchangeCodeNse}
-                        nse={row.product.currentPrice.NSE}
-                        bse={row.product.currentPrice.BSE}
-                        percent={
-                          row.product.stockDetailsReusableData.percentChange
-                        }
-                        reco={row.product.recosBar.meanValue}
-                        lastItem={index === arr.length - 1 ? true : false}
-                      />
-                    );
-                  })}
-                </Tbody>
-              </Table>
-            )}
-          </Card>
-          <Grid
-            templateColumns={{
-              sm: "1fr",
-              md: "1fr 1fr",
-              "2xl": "2fr 1.2fr 1.5fr",
-            }}
-            my="26px"
-            gap="18px"
-          >
-            {/* Welcome Card */}
-            <Card
-              p="0px"
-              gridArea={{ md: "1 / 1 / 2 / 3", "2xl": "auto" }}
-              bgImage={medusa}
-              bgSize="cover"
-              bgPosition="50%"
-            >
-              <CardBody w="100%" h="100%">
-                <Flex
-                  flexDirection={{ sm: "column", lg: "row" }}
-                  w="100%"
-                  h="100%"
-                >
+                <CardHeader p="12px 0px 28px 0px">
                   <Flex
-                    flexDirection="column"
-                    h="100%"
-                    p="22px"
-                    minW="100%"
-                    lineHeight="1.6"
-                    alignContent="flex-end"
-                    alignItems="center"
-                    flexWrap="wrap"
+                    direction="row"
+                    width="-webkit-fill-available"
+                    justifyContent="space-between"
                   >
-                    <Text fontSize="sm" color="gray.400" fontWeight="bold">
-                      Welcome back,
+                    <Text fontSize="lg" color="#fff" fontWeight="bold" pb="8px">
+                      Your stocks
                     </Text>
-                    <Text
-                      fontSize="28px"
-                      color="#fff"
-                      fontWeight="bold"
-                      mb="18px"
-                    >
-                      {(user && user.username) || "User"}
-                    </Text>
-
-                    <Spacer />
-                    <Flex align="center">
-                      <Button
-                        p="0px"
-                        variant="no-hover"
-                        bg="transparent"
-                        my={{ sm: "1.5rem", lg: "0px" }}
-                        onClick={() => navi()}
+                    <Flex align="center" justifyContent="space-between">
+                      {product.length > 0 && (
+                        <>
+                          <button
+                            onClick={async () => {
+                              const res = await updateProduct();
+                              getProducts();
+                            }}
+                          >
+                            <IconBox
+                              as="box"
+                              h={"45px"}
+                              w={"45px"}
+                              bg="#582cff"
+                              marginRight="10px"
+                            >
+                              <Icon
+                                as={FaFilePdf}
+                                color="#fff"
+                                w="30px"
+                                h="30px"
+                              />
+                            </IconBox>
+                          </button>
+                          <Flex direction="column">
+                            <Text
+                              fontWeight="bold"
+                              as="span"
+                              fontSize="sm"
+                              color="gray.400"
+                            >
+                              Send summary
+                            </Text>{" "}
+                          </Flex>
+                        </>
+                      )}
+                    </Flex>
+                  </Flex>
+                </CardHeader>
+                <Table variant="simple" color="#fff">
+                  <Thead>
+                    <Tr my=".8rem" ps="0px">
+                      <Th
+                        ps="0px"
+                        color="gray.400"
+                        fontFamily="Plus Jakarta Display"
+                        borderBottomColor="#56577A"
                       >
+                        Name
+                      </Th>
+                      <Th
+                        color="gray.400"
+                        fontFamily="Plus Jakarta Display"
+                        borderBottomColor="#56577A"
+                      >
+                        Price
+                      </Th>
+                      <Th
+                        color="gray.400"
+                        fontFamily="Plus Jakarta Display"
+                        borderBottomColor="#56577A"
+                      >
+                        Percentage change
+                      </Th>
+                      <Th
+                        color="gray.400"
+                        fontFamily="Plus Jakarta Display"
+                        borderBottomColor="#56577A"
+                      >
+                        Analyst Recommendation
+                      </Th>
+                    </Tr>
+                  </Thead>
+                  <Tbody>
+                    {product.map((row, index, arr) => {
+                      return (
+                        <DashboardMainTable
+                          name={row.product.companyName}
+                          symbol={row.product.companyProfile.exchangeCodeNse}
+                          nse={row.product.currentPrice.NSE}
+                          bse={row.product.currentPrice.BSE}
+                          percent={
+                            row.product.stockDetailsReusableData.percentChange
+                          }
+                          reco={row.product.recosBar.meanValue}
+                          lastItem={index === arr.length - 1 ? true : false}
+                        />
+                      );
+                    })}
+                  </Tbody>
+                </Table>
+              </Card>
+              <Grid
+                templateColumns={{
+                  sm: "1fr",
+                  md: "1fr 1fr",
+                  "2xl": "2fr 1.2fr 1.5fr",
+                }}
+                my="26px"
+                gap="18px"
+              >
+                {/* Welcome Card */}
+                <Card
+                  p="0px"
+                  gridArea={{ md: "1 / 1 / 2 / 3", "2xl": "auto" }}
+                  bgImage={medusa}
+                  bgSize="cover"
+                  bgPosition="50%"
+                >
+                  <CardBody w="100%" h="100%">
+                    <Flex
+                      flexDirection={{ sm: "column", lg: "row" }}
+                      w="100%"
+                      h="100%"
+                    >
+                      <Flex
+                        flexDirection="column"
+                        h="100%"
+                        p="22px"
+                        minW="100%"
+                        lineHeight="1.6"
+                        alignContent="flex-end"
+                        alignItems="center"
+                        flexWrap="wrap"
+                      >
+                        <Text fontSize="sm" color="gray.400" fontWeight="bold">
+                          Welcome back,
+                        </Text>
                         <Text
-                          fontSize="sm"
+                          fontSize="28px"
                           color="#fff"
                           fontWeight="bold"
-                          cursor="pointer"
-                          transition="all .3s ease"
-                          my={{ sm: "1.5rem", lg: "0px" }}
-                          _hover={{ me: "4px" }}
+                          mb="18px"
                         >
-                          Explore Stocks , IPO and Mutual Funds
+                          {(user && user.username) || "User"}
                         </Text>
-                        <Icon
-                          as={BsArrowRight}
-                          w="20px"
-                          h="20px"
-                          color="#fff"
-                          fontSize="2xl"
-                          transition="all .3s ease"
-                          mx=".3rem"
-                          cursor="pointer"
-                          pt="4px"
-                          _hover={{ transform: "translateX(20%)" }}
-                        />
+
+                        <Spacer />
+                        <Flex align="center">
+                          <Button
+                            p="0px"
+                            variant="no-hover"
+                            bg="transparent"
+                            my={{ sm: "1.5rem", lg: "0px" }}
+                            onClick={() => navi()}
+                          >
+                            <Text
+                              fontSize="sm"
+                              color="#fff"
+                              fontWeight="bold"
+                              cursor="pointer"
+                              transition="all .3s ease"
+                              my={{ sm: "1.5rem", lg: "0px" }}
+                              _hover={{ me: "4px" }}
+                            >
+                              Explore Stocks , IPO and Mutual Funds
+                            </Text>
+                            <Icon
+                              as={BsArrowRight}
+                              w="20px"
+                              h="20px"
+                              color="#fff"
+                              fontSize="2xl"
+                              transition="all .3s ease"
+                              mx=".3rem"
+                              cursor="pointer"
+                              pt="4px"
+                              _hover={{ transform: "translateX(20%)" }}
+                            />
+                          </Button>
+                        </Flex>
+                      </Flex>
+                    </Flex>
+                  </CardBody>
+                </Card>
+                {/* Satisfaction Rate */}
+                <Card gridArea={{ md: "2 / 1 / 3 / 2", "2xl": "auto" }}>
+                  <CardHeader mb="24px">
+                    <Flex direction="column">
+                      <Text
+                        color="#fff"
+                        fontSize="lg"
+                        fontWeight="bold"
+                        mb="4px"
+                      >
+                        Positive performance Rate
+                      </Text>
+                      <Text color="gray.400" fontSize="sm">
+                        From all stocks
+                      </Text>
+                    </Flex>
+                  </CardHeader>
+                  <Flex direction="column" justify="center" align="center">
+                    <Box zIndex="-1">
+                      <CircularProgress
+                        size={200}
+                        value={100 * (total / product.length)}
+                        thickness={6}
+                        color="#582CFF"
+                        variant="vision"
+                        rounded
+                      >
+                        <CircularProgressLabel>
+                          <IconBox
+                            mb="20px"
+                            mx="auto"
+                            bg="brand.200"
+                            borderRadius="50%"
+                            w="48px"
+                            h="48px"
+                          >
+                            <Icon as={BiHappy} color="#fff" w="30px" h="30px" />
+                          </IconBox>
+                        </CircularProgressLabel>
+                      </CircularProgress>
+                    </Box>
+                    <Stack
+                      direction="row"
+                      spacing={{ sm: "42px", md: "68px" }}
+                      justify="center"
+                      maxW={{ sm: "270px", md: "300px", lg: "100%" }}
+                      mx={{ sm: "auto", md: "0px" }}
+                      p="18px 22px"
+                      bg="linear-gradient(126.97deg, rgb(6, 11, 40) 28.26%, rgba(10, 14, 35) 91.2%)"
+                      borderRadius="20px"
+                      position="absolute"
+                      bottom="5%"
+                    >
+                      <Text fontSize="xs" color="gray.400">
+                        0%
+                      </Text>
+                      <Flex direction="column" align="center" minW="80px">
+                        <Text color="#fff" fontSize="28px" fontWeight="bold">
+                          {Math.round(100 * (total / product.length))}{" "}
+                          {" " + "%"}
+                        </Text>
+                        <Text fontSize="xs" color="gray.400">
+                          {total +
+                            " out of " +
+                            product.length +
+                            " stocks are performing well "}
+                        </Text>
+                      </Flex>
+                      <Text fontSize="xs" color="gray.400">
+                        100%
+                      </Text>
+                    </Stack>
+                  </Flex>
+                </Card>
+                {/* Referral Tracking */}
+                <Card gridArea={{ md: "2 / 2 / 3 / 3", "2xl": "auto" }}>
+                  <Flex direction="column">
+                    <Flex justify="space-between" align="center" mb="40px">
+                      <Text color="#fff" fontSize="lg" fontWeight="bold">
+                        Top performance
+                      </Text>
+                      <Button
+                        borderRadius="12px"
+                        w="38px"
+                        h="38px"
+                        bg="#22234B"
+                        _hover="none"
+                        _active="none"
+                      >
+                        <Icon as={IoEllipsisHorizontal} color="#7551FF" />
                       </Button>
                     </Flex>
-                  </Flex>
-                </Flex>
-              </CardBody>
-            </Card>
-            {/* Satisfaction Rate */}
-            <Card gridArea={{ md: "2 / 1 / 3 / 2", "2xl": "auto" }}>
-              <CardHeader mb="24px">
-                <Flex direction="column">
-                  <Text color="#fff" fontSize="lg" fontWeight="bold" mb="4px">
-                    Positive performance Rate
-                  </Text>
-                  <Text color="gray.400" fontSize="sm">
-                    From all stocks
-                  </Text>
-                </Flex>
-              </CardHeader>
-              <Flex direction="column" justify="center" align="center">
-                <Box zIndex="-1">
-                  <CircularProgress
-                    size={200}
-                    value={100 * (total / product.length)}
-                    thickness={6}
-                    color="#582CFF"
-                    variant="vision"
-                    rounded
-                  >
-                    <CircularProgressLabel>
-                      <IconBox
-                        mb="20px"
-                        mx="auto"
-                        bg="brand.200"
-                        borderRadius="50%"
-                        w="48px"
-                        h="48px"
+                    <Flex direction={{ sm: "column", md: "row" }}>
+                      <Flex
+                        direction="column"
+                        me={{ md: "6px", lg: "52px" }}
+                        mb={{ sm: "16px", md: "0px" }}
                       >
-                        <Icon as={BiHappy} color="#fff" w="30px" h="30px" />
-                      </IconBox>
-                    </CircularProgressLabel>
-                  </CircularProgress>
-                </Box>
-                <Stack
-                  direction="row"
-                  spacing={{ sm: "42px", md: "68px" }}
-                  justify="center"
-                  maxW={{ sm: "270px", md: "300px", lg: "100%" }}
-                  mx={{ sm: "auto", md: "0px" }}
-                  p="18px 22px"
-                  bg="linear-gradient(126.97deg, rgb(6, 11, 40) 28.26%, rgba(10, 14, 35) 91.2%)"
-                  borderRadius="20px"
-                  position="absolute"
-                  bottom="5%"
-                >
-                  <Text fontSize="xs" color="gray.400">
-                    0%
-                  </Text>
-                  <Flex direction="column" align="center" minW="80px">
-                    <Text color="#fff" fontSize="28px" fontWeight="bold">
-                      {Math.round(100 * (total / product.length))} {" " + "%"}
-                    </Text>
-                    <Text fontSize="xs" color="gray.400">
-                      {total +
-                        " out of " +
-                        product.length +
-                        " stocks are performing well "}
-                    </Text>
-                  </Flex>
-                  <Text fontSize="xs" color="gray.400">
-                    100%
-                  </Text>
-                </Stack>
-              </Flex>
-            </Card>
-            {/* Referral Tracking */}
-            <Card gridArea={{ md: "2 / 2 / 3 / 3", "2xl": "auto" }}>
-              <Flex direction="column">
-                <Flex justify="space-between" align="center" mb="40px">
-                  <Text color="#fff" fontSize="lg" fontWeight="bold">
-                    Top performance
-                  </Text>
-                  <Button
-                    borderRadius="12px"
-                    w="38px"
-                    h="38px"
-                    bg="#22234B"
-                    _hover="none"
-                    _active="none"
-                  >
-                    <Icon as={IoEllipsisHorizontal} color="#7551FF" />
-                  </Button>
-                </Flex>
-                <Flex direction={{ sm: "column", md: "row" }}>
-                  <Flex
-                    direction="column"
-                    me={{ md: "6px", lg: "52px" }}
-                    mb={{ sm: "16px", md: "0px" }}
-                  >
-                    <Flex
-                      direction="column"
-                      p="22px"
-                      pe={{ sm: "22e", md: "8px", lg: "22px" }}
-                      minW={{ sm: "220px", md: "140px", lg: "220px" }}
-                      bg="linear-gradient(126.97deg, #060C29 28.26%, rgba(4, 12, 48, 0.5) 91.2%)"
-                      borderRadius="20px"
-                      mb="20px"
-                    >
-                      <Text color="gray.400" fontSize="sm" mb="4px">
-                        Name
-                      </Text>
-                      <Text color="#fff" fontSize="lg" fontWeight="bold">
-                        {product[currTopId] &&
-                          product[currTopId].product.companyName}
-                      </Text>
-                    </Flex>
-                    <Flex
-                      direction="column"
-                      p="22px"
-                      pe={{ sm: "22px", md: "8px", lg: "22px" }}
-                      minW={{ sm: "170px", md: "140px", lg: "170px" }}
-                      bg="linear-gradient(126.97deg, #060C29 28.26%, rgba(4, 12, 48, 0.5) 91.2%)"
-                      borderRadius="20px"
-                    >
-                      <Text color="gray.400" fontSize="sm" mb="4px">
-                        Price
-                      </Text>
-                      <Text color="#fff" fontSize="lg" fontWeight="bold">
-                        {product[currTopId] &&
-                          product[currTopId].product.currentPrice.NSE}
-                      </Text>
-                    </Flex>
-                  </Flex>
-                  <Box mx={{ sm: "auto", md: "0px" }}>
-                    <CircularProgress
-                      size={
-                        window.innerWidth >= 1024
-                          ? 200
-                          : window.innerWidth >= 768
-                          ? 180
-                          : 200
-                      }
-                      value={100}
-                      thickness={6}
-                      color="#05CD99"
-                      variant="vision"
-                    >
-                      <CircularProgressLabel>
                         <Flex
                           direction="column"
-                          justify="center"
-                          align="center"
+                          p="22px"
+                          pe={{ sm: "22e", md: "8px", lg: "22px" }}
+                          minW={{ sm: "220px", md: "140px", lg: "220px" }}
+                          bg="linear-gradient(126.97deg, #060C29 28.26%, rgba(4, 12, 48, 0.5) 91.2%)"
+                          borderRadius="20px"
+                          mb="20px"
                         >
-                          <Text color="gray.400" fontSize="sm">
-                            Percentage change
+                          <Text color="gray.400" fontSize="sm" mb="4px">
+                            Name
                           </Text>
-                          <Text
-                            color="#fff"
-                            fontSize={{ md: "16px", lg: "25px" }}
-                            fontWeight="bold"
-                            mb="4px"
-                          >
+                          <Text color="#fff" fontSize="lg" fontWeight="bold">
                             {product[currTopId] &&
-                              product[currTopId].product
-                                .stockDetailsReusableData.percentChange +
-                                " "}{" "}
-                            {product[currTopId] &&
-                            product[currTopId].product.stockDetailsReusableData
-                              .percentChange > 0 ? (
-                              <Icon color="white" as={FaArrowUp} me="6px" />
-                            ) : (
-                              <Icon color="white" as={FaArrowDown} me="6px" />
-                            )}
+                              product[currTopId].product.companyName}
                           </Text>
                         </Flex>
-                      </CircularProgressLabel>
-                    </CircularProgress>
-                  </Box>
-                </Flex>
-              </Flex>
-            </Card>
-          </Grid>
+                        <Flex
+                          direction="column"
+                          p="22px"
+                          pe={{ sm: "22px", md: "8px", lg: "22px" }}
+                          minW={{ sm: "170px", md: "140px", lg: "170px" }}
+                          bg="linear-gradient(126.97deg, #060C29 28.26%, rgba(4, 12, 48, 0.5) 91.2%)"
+                          borderRadius="20px"
+                        >
+                          <Text color="gray.400" fontSize="sm" mb="4px">
+                            Price
+                          </Text>
+                          <Text color="#fff" fontSize="lg" fontWeight="bold">
+                            {product[currTopId] &&
+                              product[currTopId].product.currentPrice.NSE}
+                          </Text>
+                        </Flex>
+                      </Flex>
+                      <Box mx={{ sm: "auto", md: "0px" }}>
+                        <CircularProgress
+                          size={
+                            window.innerWidth >= 1024
+                              ? 200
+                              : window.innerWidth >= 768
+                              ? 180
+                              : 200
+                          }
+                          value={100}
+                          thickness={6}
+                          color="#05CD99"
+                          variant="vision"
+                        >
+                          <CircularProgressLabel>
+                            <Flex
+                              direction="column"
+                              justify="center"
+                              align="center"
+                            >
+                              <Text color="gray.400" fontSize="sm">
+                                Percentage change
+                              </Text>
+                              <Text
+                                color="#fff"
+                                fontSize={{ md: "16px", lg: "25px" }}
+                                fontWeight="bold"
+                                mb="4px"
+                              >
+                                {product[currTopId] &&
+                                  product[currTopId].product
+                                    .stockDetailsReusableData.percentChange +
+                                    " "}{" "}
+                                {product[currTopId] &&
+                                product[currTopId].product
+                                  .stockDetailsReusableData.percentChange >
+                                  0 ? (
+                                  <Icon color="white" as={FaArrowUp} me="6px" />
+                                ) : (
+                                  <Icon
+                                    color="white"
+                                    as={FaArrowDown}
+                                    me="6px"
+                                  />
+                                )}
+                              </Text>
+                            </Flex>
+                          </CircularProgressLabel>
+                        </CircularProgress>
+                      </Box>
+                    </Flex>
+                  </Flex>
+                </Card>
+              </Grid>
+            </>
+          )}
           <Grid maxW={{ sm: "100%", md: "100%" }} gap="24px" mb="24px">
             {/* Recos */}
             <Card p="16px" overflowX={{ sm: "scroll", xl: "hidden" }} my="26px">
