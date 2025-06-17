@@ -67,7 +67,6 @@ export default function Dashboard(props) {
           if (user1.user && user1.user.createdAt) {
             const today = new Date();
             const date = new Date(user1.user.createdAt);
-            console.log(today, date, (today - date) / (1000 * 60 * 60 * 24));
             if ((today - date) / (1000 * 60 * 60 * 24) <= 7) {
               setisvalid(true);
             } else {
