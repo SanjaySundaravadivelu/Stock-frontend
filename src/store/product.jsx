@@ -62,6 +62,9 @@ export const useProductStore = create((set) => ({
   fetchProducts: async () => {
     const res = await fetch(BEURL + `/api/products/`, {
       credentials: "include",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
     const data = await res.json();
     return data;

@@ -1087,87 +1087,98 @@ export default function Dashboard() {
                   Your stocks
                 </Text>
                 <Flex align="center" justifyContent="space-between">
-                  <button
-                    onClick={async () => {
-                      const res = await updateProduct();
-                      getProducts();
-                    }}
-                  >
-                    <IconBox
-                      as="box"
-                      h={"45px"}
-                      w={"45px"}
-                      bg="#582cff"
-                      marginRight="10px"
-                    >
-                      <Icon as={FaFilePdf} color="#fff" w="30px" h="30px" />
-                    </IconBox>
-                  </button>
-                  <Flex direction="column">
-                    <Text
-                      fontWeight="bold"
-                      as="span"
-                      fontSize="sm"
-                      color="gray.400"
-                    >
-                      Send summary
-                    </Text>{" "}
-                  </Flex>
+                  {product.length > 0 && (
+                    <>
+                      <button
+                        onClick={async () => {
+                          const res = await updateProduct();
+                          getProducts();
+                        }}
+                      >
+                        <IconBox
+                          as="box"
+                          h={"45px"}
+                          w={"45px"}
+                          bg="#582cff"
+                          marginRight="10px"
+                        >
+                          <Icon as={FaFilePdf} color="#fff" w="30px" h="30px" />
+                        </IconBox>
+                      </button>
+                      <Flex direction="column">
+                        <Text
+                          fontWeight="bold"
+                          as="span"
+                          fontSize="sm"
+                          color="gray.400"
+                        >
+                          Send summary
+                        </Text>{" "}
+                      </Flex>
+                    </>
+                  )}
                 </Flex>
               </Flex>
             </CardHeader>
-            <Table variant="simple" color="#fff">
-              <Thead>
-                <Tr my=".8rem" ps="0px">
-                  <Th
-                    ps="0px"
-                    color="gray.400"
-                    fontFamily="Plus Jakarta Display"
-                    borderBottomColor="#56577A"
-                  >
-                    Name
-                  </Th>
-                  <Th
-                    color="gray.400"
-                    fontFamily="Plus Jakarta Display"
-                    borderBottomColor="#56577A"
-                  >
-                    Price
-                  </Th>
-                  <Th
-                    color="gray.400"
-                    fontFamily="Plus Jakarta Display"
-                    borderBottomColor="#56577A"
-                  >
-                    Percentage change
-                  </Th>
-                  <Th
-                    color="gray.400"
-                    fontFamily="Plus Jakarta Display"
-                    borderBottomColor="#56577A"
-                  >
-                    Analyst Recommendation
-                  </Th>
-                </Tr>
-              </Thead>
-              <Tbody>
-                {product.map((row, index, arr) => {
-                  return (
-                    <DashboardMainTable
-                      name={row.product.companyName}
-                      symbol={row.product.companyProfile.exchangeCodeNse}
-                      nse={row.product.currentPrice.NSE}
-                      bse={row.product.currentPrice.BSE}
-                      percent={
-                        row.product.stockDetailsReusableData.percentChange
-                      }
-                      reco={row.product.recosBar.meanValue}
-                      lastItem={index === arr.length - 1 ? true : false}
-                    />
-                  );
-                })}
-              </Tbody>
-            </Table>
+            {product.length <= 0 ? (
+              <Text color="white">
+                Your Watchlist is empty ... Kindly navigate to explore and add
+                stocks to populate the dashboard 😊
+              </Text>
+            ) : (
+              <Table variant="simple" color="#fff">
+                <Thead>
+                  <Tr my=".8rem" ps="0px">
+                    <Th
+                      ps="0px"
+                      color="gray.400"
+                      fontFamily="Plus Jakarta Display"
+                      borderBottomColor="#56577A"
+                    >
+                      Name
+                    </Th>
+                    <Th
+                      color="gray.400"
+                      fontFamily="Plus Jakarta Display"
+                      borderBottomColor="#56577A"
+                    >
+                      Price
+                    </Th>
+                    <Th
+                      color="gray.400"
+                      fontFamily="Plus Jakarta Display"
+                      borderBottomColor="#56577A"
+                    >
+                      Percentage change
+                    </Th>
+                    <Th
+                      color="gray.400"
+                      fontFamily="Plus Jakarta Display"
+                      borderBottomColor="#56577A"
+                    >
+                      Analyst Recommendation
+                    </Th>
+                  </Tr>
+                </Thead>
+                <Tbody>
+                  {product.map((row, index, arr) => {
+                    return (
+                      <DashboardMainTable
+                        name={row.product.companyName}
+                        symbol={row.product.companyProfile.exchangeCodeNse}
+                        nse={row.product.currentPrice.NSE}
+                        bse={row.product.currentPrice.BSE}
+                        percent={
+                          row.product.stockDetailsReusableData.percentChange
+                        }
+                        reco={row.product.recosBar.meanValue}
+                        lastItem={index === arr.length - 1 ? true : false}
+                      />
+                    );
+                  })}
+                </Tbody>
+              </Table>
+            )}
           </Card>
           <Grid
             templateColumns={{
