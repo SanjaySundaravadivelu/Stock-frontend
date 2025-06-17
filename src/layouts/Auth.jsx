@@ -62,11 +62,13 @@ export default function Dashboard(props) {
       try {
         if (token) {
           const user1 = jwt_decode.jwtDecode(token);
+
           setUser(user1.user);
           if (user1.user && user1.user.createdAt) {
             const today = new Date();
             const date = new Date(user1.user.createdAt);
-            if ((date - today) / (1000 * 60 * 60 * 24) <= 0) {
+            console.log(today, date, (today - date) / (1000 * 60 * 60 * 24));
+            if ((today - date) / (1000 * 60 * 60 * 24) <= 7) {
               setisvalid(true);
             } else {
               setisvalid(false);
@@ -203,13 +205,22 @@ export default function Dashboard(props) {
         </ChakraProvider>
       ) : (
         <ChakraProvider theme={theme} resetCss={false}>
-          <MainPanel
-            ref={mainPanel}
-            w={{
-              base: "100%",
-              xl: "calc(100% - 275px)",
-            }}
-          >
+          <MainPanel>
+            <MainPanel
+              ref={mainPanel}
+              w={{
+                base: "100%",
+                xl: "calc(100% - 275px)",
+              }}
+            >
+              <Portal>
+                <AdminNavbar
+                  onOpen={onOpen}
+                  logoText={"VISION UI FREE"}
+                  {...rest}
+                />
+              </Portal>
+            </MainPanel>
             <Pricing />
           </MainPanel>
         </ChakraProvider>

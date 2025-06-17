@@ -123,7 +123,11 @@ const PricingPage = () => {
 
   return (
     <Box minH="100vh" py={16}>
-      <Container maxW="7xl">
+      <Container
+        style={{
+          maxWidth: "100%",
+        }}
+      >
         {/* Header Section */}
         <VStack spacing={8} textAlign="center" mb={16}>
           <Heading size="2xl" color={primaryColor}>

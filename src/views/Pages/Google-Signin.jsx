@@ -52,6 +52,7 @@ const SignIn = () => {
           localStorage.setItem("token", data.token);
           setIsAuth(true);
           history.push("/auth/dashboard");
+          window.location.reload();
         } else {
           throw new Error(data.message || "Login failed");
         }

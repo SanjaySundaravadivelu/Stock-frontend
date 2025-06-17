@@ -41,7 +41,11 @@ export default function HeaderLinks(props) {
     const today = new Date();
     const date = new Date(user.createdAt);
 
-    return Math.round((date - today) / (1000 * 60 * 60 * 24));
+    const res = Math.round((today - date) / (1000 * 60 * 60 * 24));
+    if (res <= 7) {
+      return `${7 - res} days remaining`;
+    }
+    return "Expired";
   }
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -57,8 +61,9 @@ export default function HeaderLinks(props) {
   }, []);
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.clear();
     history.push("/");
+    window.location.reload();
   };
 
   return (
@@ -136,7 +141,7 @@ export default function HeaderLinks(props) {
                   <Stack spacing={0} align={"center"}>
                     <Text color={"gray.500"}>
                       {" "}
-                      Free trail - {getReamining(user) || "User"} days remaining
+                      Free trail - {getReamining(user) || "User"}
                     </Text>
                   </Stack>
 
