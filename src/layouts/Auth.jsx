@@ -155,18 +155,20 @@ export default function Dashboard(props) {
   document.documentElement.dir = "ltr";
   if (loading) {
     return (
-      <Flex
-        minH="300px"
-        wrap="wrap"
-        alignContent="center"
-        justifyContent="center"
-      >
-        {" "}
-        <VStack colorPalette="teal">
-          <Spinner color="white" />
-          <Text color="white">Loading...</Text>
-        </VStack>
-      </Flex>
+      <ChakraProvider theme={theme} resetCss={false}>
+        <Flex
+          minH="300px"
+          wrap="wrap"
+          alignContent="center"
+          justifyContent="center"
+        >
+          {" "}
+          <VStack colorPalette="teal">
+            <Spinner color="white" />
+            <Text color="white">Loading...</Text>
+          </VStack>
+        </Flex>
+      </ChakraProvider>
     );
   }
 
