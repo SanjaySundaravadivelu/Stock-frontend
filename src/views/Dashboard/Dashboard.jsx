@@ -108,7 +108,7 @@ export default function Dashboard() {
   }, []);
   const { fetchProducts, fetchStat, fetchReco, updateProduct } =
     useProductStore();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const [product, setProducts] = useState([
     {
@@ -856,50 +856,6 @@ export default function Dashboard() {
   useEffect(() => {
     getProducts();
   }, []);
-  const test = (
-    <>
-      <Card>
-        <CardHeader mb="32px">
-          <Flex direction="column">
-            <Text fontSize="lg" color="#fff" fontWeight="bold" mb="6px">
-              Orders overview
-            </Text>
-            <Flex align="center">
-              <Icon
-                as={AiFillCheckCircle}
-                color="green.500"
-                w="15px"
-                h="15px"
-                me="5px"
-              />
-              <Text fontSize="sm" color="gray.400" fontWeight="normal">
-                <Text fontWeight="bold" as="span" color="gray.400">
-                  +30%
-                </Text>{" "}
-                this month
-              </Text>
-            </Flex>
-          </Flex>
-        </CardHeader>
-        <CardBody>
-          <Flex direction="column" lineHeight="21px">
-            {timelineData.map((row, index, arr) => {
-              return (
-                <TimelineRow
-                  logo={row.logo}
-                  title={row.title}
-                  date={row.date}
-                  color={row.color}
-                  index={index}
-                  arrLength={arr.length}
-                />
-              );
-            })}
-          </Flex>
-        </CardBody>
-      </Card>
-    </>
-  );
 
   return (
     <>
